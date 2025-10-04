@@ -1,122 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout-sw600dp/fragment_mood_journal.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="32dp">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mood Journal"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/emoji_label"
+    <Button
+        android:id="@+id/calendar_view_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How are you feeling?"
-        android:textSize="16sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Calendar View"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/emoji_selector"
+    <!-- Chart Card - Larger on tablets -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/chart_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/emoji_label"
+        android:layout_height="250dp"
+        android:layout_marginTop="24dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/emoji_1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="😊"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/emoji_2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="😐"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weekly Mood Trend"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/emoji_3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="😢"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground" />
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/mood_chart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/emoji_4"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="😡"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/emoji_5"
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Input Section - Side by side on tablets -->
+    <LinearLayout
+        android:id="@+id/input_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Left side: Emoji and button -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="60dp"
-            android:text="😴"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:background="?attr/selectableItemBackground" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/emoji_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How are you feeling?"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/emoji_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/emoji_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:text="😊"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/emoji_2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:text="😐"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/emoji_3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:text="😢"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/emoji_4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:text="😡"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground" />
+
+                <TextView
+                    android:id="@+id/emoji_5"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:text="😴"
+                    android:textSize="40sp"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save_mood_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Mood"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+
+        <!-- Right side: Note input -->
+        <EditText
+            android:id="@+id/note_input"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="200dp"
+            android:hint="Add a note (optional)"
+            android:gravity="top|start"
+            android:padding="12dp"
+            android:background="@android:drawable/editbox_background" />
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/note_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Add a note (optional)"
-        android:minLines="3"
-        android:gravity="top"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/emoji_selector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/save_mood_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Save Mood"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/note_input"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mood_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/save_mood_button"
+        app:layout_constraintTop_toBottomOf="@id/input_section"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

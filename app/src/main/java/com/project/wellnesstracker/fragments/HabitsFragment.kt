@@ -1,6 +1,7 @@
 package com.project.wellnesstracker.fragments
 
 import android.app.AlertDialog
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,12 +17,14 @@ import com.project.wellnesstracker.R
 import com.project.wellnesstracker.adapters.HabitAdapter
 import com.project.wellnesstracker.models.Habit
 import com.project.wellnesstracker.utils.DataManager
+import com.project.wellnesstracker.utils.WidgetUpdateHelper
 
 class HabitsFragment : Fragment() {
 
     private lateinit var dataManager: DataManager
     private lateinit var habitAdapter: HabitAdapter
     private val habits = mutableListOf<Habit>()
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +40,7 @@ class HabitsFragment : Fragment() {
         dataManager = DataManager(requireContext())
         habits.addAll(dataManager.loadHabits())
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.habits_recycler)
+        recyclerView = view.findViewById(R.id.habits_recycler)
         habitAdapter = HabitAdapter(
             habits,
             onHabitToggled = { saveHabits() },
@@ -44,12 +48,31 @@ class HabitsFragment : Fragment() {
             onHabitClicked = { habit -> editHabit(habit) }
         )
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // Set layout manager based on screen size and orientation
+        setupLayoutManager()
+
         recyclerView.adapter = habitAdapter
 
         view.findViewById<FloatingActionButton>(R.id.add_habit_button).setOnClickListener {
             showAddHabitDialog()
         }
+    }
+
+    private fun setupLayoutManager() {
+        val isTablet = resources.configuration.smallestScreenWidthDp >= 600
+        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+        recyclerView.layoutManager = when {
+            isTablet -> GridLayoutManager(requireContext(), 2) // 2 columns for tablets
+            isLandscape -> GridLayoutManager(requireContext(), 2) // 2 columns for landscape
+            else -> LinearLayoutManager(requireContext()) // 1 column for portrait phone
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Update layout when orientation changes
+        setupLayoutManager()
     }
 
     private fun showAddHabitDialog() {
@@ -128,5 +151,7 @@ class HabitsFragment : Fragment() {
 
     private fun saveHabits() {
         dataManager.saveHabits(habits)
+        // Update widget when habits change
+        WidgetUpdateHelper.updateWidget(requireContext())
     }
 }

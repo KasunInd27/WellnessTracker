@@ -11,7 +11,6 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.project.wellnesstracker.MainActivity
 
-
 class HydrationReminderWorker(
     context: Context,
     params: WorkerParameters
@@ -35,16 +34,24 @@ class HydrationReminderWorker(
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
                 description = "Reminders to drink water"
+                enableVibration(true)
+                enableLights(true)
             }
             notificationManager.createNotificationChannel(channel)
         }
 
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        // Create explicit intent to open MainActivity and navigate to Settings
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("navigate_to", "settings")
+            putExtra("source", "notification")
+        }
+
         val pendingIntent = PendingIntent.getActivity(
             applicationContext,
-            0,
+            1001,
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
@@ -54,6 +61,7 @@ class HydrationReminderWorker(
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
         notificationManager.notify(1001, notification)
