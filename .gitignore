@@ -1,0 +1,60 @@
+# Gradle files
+.gradle/
+build/
+*/build/
+!gradle-wrapper.jar
+
+# Local configuration file (SDK paths, etc.)
+local.properties
+
+# IntelliJ / Android Studio files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Log files
+*.log
+
+# Android specific
+captures/
+output.json
+
+# Generated files
+generated/
+bin/
+gen/
+
+# Keystore files (for app signing)
+*.jks
+*.keystore
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Crashlytics
+fabric.properties
+
+# Google Services (keep your API keys private)
+google-services.json
+
+# Node / npm (if using React Native or hybrid)
+node_modules/
+
+# Kotlin build cache
+.kotlin/
+
+# Jetpack Compose compiler cache
+compose-cache/
+
+# Others
+*.apk
+*.aab
+*.ap_
+
+# Ignore lint output
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/

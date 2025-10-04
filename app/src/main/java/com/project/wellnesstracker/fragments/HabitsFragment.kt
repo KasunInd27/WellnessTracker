@@ -1,0 +1,132 @@
+package com.project.wellnesstracker.fragments
+
+import android.app.AlertDialog
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.project.wellnesstracker.R
+import com.project.wellnesstracker.adapters.HabitAdapter
+import com.project.wellnesstracker.models.Habit
+import com.project.wellnesstracker.utils.DataManager
+
+class HabitsFragment : Fragment() {
+
+    private lateinit var dataManager: DataManager
+    private lateinit var habitAdapter: HabitAdapter
+    private val habits = mutableListOf<Habit>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_habits, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dataManager = DataManager(requireContext())
+        habits.addAll(dataManager.loadHabits())
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.habits_recycler)
+        habitAdapter = HabitAdapter(
+            habits,
+            onHabitToggled = { saveHabits() },
+            onHabitDeleted = { habit -> deleteHabit(habit) },
+            onHabitClicked = { habit -> editHabit(habit) }
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = habitAdapter
+
+        view.findViewById<FloatingActionButton>(R.id.add_habit_button).setOnClickListener {
+            showAddHabitDialog()
+        }
+    }
+
+    private fun showAddHabitDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Add New Habit")
+
+        val layout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 20, 50, 20)
+        }
+
+        val nameInput = EditText(requireContext()).apply {
+            hint = "Habit name (e.g., Drink water)"
+        }
+        val descInput = EditText(requireContext()).apply {
+            hint = "Description (optional)"
+        }
+
+        layout.addView(nameInput)
+        layout.addView(descInput)
+        builder.setView(layout)
+
+        builder.setPositiveButton("Add") { _, _ ->
+            val name = nameInput.text.toString()
+            if (name.isNotBlank()) {
+                val habit = Habit(name = name, description = descInput.text.toString())
+                habits.add(habit)
+                habitAdapter.notifyItemInserted(habits.size - 1)
+                saveHabits()
+            }
+        }
+
+        builder.setNegativeButton("Cancel", null)
+        builder.show()
+    }
+
+    private fun editHabit(habit: Habit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Edit Habit")
+
+        val layout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 20, 50, 20)
+        }
+
+        val nameInput = EditText(requireContext()).apply {
+            setText(habit.name)
+            hint = "Habit name"
+        }
+        val descInput = EditText(requireContext()).apply {
+            setText(habit.description)
+            hint = "Description"
+        }
+
+        layout.addView(nameInput)
+        layout.addView(descInput)
+        builder.setView(layout)
+
+        builder.setPositiveButton("Save") { _, _ ->
+            habit.name = nameInput.text.toString()
+            habit.description = descInput.text.toString()
+            habitAdapter.notifyDataSetChanged()
+            saveHabits()
+        }
+
+        builder.setNegativeButton("Cancel", null)
+        builder.show()
+    }
+
+    private fun deleteHabit(habit: Habit) {
+        val position = habits.indexOf(habit)
+        habits.remove(habit)
+        habitAdapter.notifyItemRemoved(position)
+        saveHabits()
+    }
+
+    private fun saveHabits() {
+        dataManager.saveHabits(habits)
+    }
+}
