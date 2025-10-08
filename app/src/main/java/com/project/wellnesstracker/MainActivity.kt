@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.wellnesstracker.fragments.HabitsFragment
 import com.project.wellnesstracker.fragments.MoodJournalFragment
+import com.project.wellnesstracker.fragments.AnalyticsFragment
 import com.project.wellnesstracker.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             val fragment = when (intent.getStringExtra("navigate_to")) {
                 "settings" -> SettingsFragment()
                 "mood" -> MoodJournalFragment()
+                "analytics" -> AnalyticsFragment()
                 else -> HabitsFragment()
             }
 
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             when (fragment) {
                 is SettingsFragment -> bottomNav.selectedItemId = R.id.nav_settings
                 is MoodJournalFragment -> bottomNav.selectedItemId = R.id.nav_mood
+                is AnalyticsFragment -> bottomNav.selectedItemId = R.id.nav_analytics
                 else -> bottomNav.selectedItemId = R.id.nav_habits
             }
         }
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             val fragment = when (item.itemId) {
                 R.id.nav_habits -> HabitsFragment()
                 R.id.nav_mood -> MoodJournalFragment()
+                R.id.nav_analytics -> AnalyticsFragment()
                 R.id.nav_settings -> SettingsFragment()
                 else -> return@setOnItemSelectedListener false
             }
@@ -84,6 +88,12 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.nav_host_fragment, MoodJournalFragment())
                     .commit()
                 bottomNav.selectedItemId = R.id.nav_mood
+            }
+            "analytics" -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment, AnalyticsFragment())
+                    .commit()
+                bottomNav.selectedItemId = R.id.nav_analytics
             }
         }
     }

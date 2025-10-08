@@ -43,6 +43,12 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
+        <!-- 🆕 Added: Receiver for AlarmManager hydration notifications -->
+        <receiver
+            android:name=".receivers.HydrationReminderReceiver"
+            android:exported="true" />
+
+
     </application>
 
 </manifest>

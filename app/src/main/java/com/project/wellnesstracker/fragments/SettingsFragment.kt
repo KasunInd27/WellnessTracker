@@ -9,8 +9,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.project.wellnesstracker.R
 import com.project.wellnesstracker.models.HydrationSettings
@@ -22,10 +20,6 @@ class SettingsFragment : Fragment() {
 
     private lateinit var dataManager: DataManager
     private lateinit var settings: HydrationSettings
-
-    companion object {
-        private const val MIN_INTERVAL_MINUTES = 15 // WorkManager minimum
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,76 +42,58 @@ class SettingsFragment : Fragment() {
         hydrationSwitch.isChecked = settings.isEnabled
         intervalInput.setText(settings.intervalMinutes.toString())
 
-        // Add hint about minimum interval
-        intervalInput.hint = "Minimum: $MIN_INTERVAL_MINUTES minutes"
-
         saveButton.setOnClickListener {
-            val inputInterval = intervalInput.text.toString().toIntOrNull()
+            val interval = intervalInput.text.toString().toIntOrNull() ?: 60
 
-            // Validate input
-            if (inputInterval == null || inputInterval <= 0) {
-                Toast.makeText(
-                    requireContext(),
-                    "Please enter a valid interval",
-                    Toast.LENGTH_SHORT
-                ).show()
+            // Validate minimum interval
+            if (interval < 1) {
+                Toast.makeText(requireContext(), "Minimum interval is 1 minute", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Enforce minimum and warn user if adjusted
-            val actualInterval = if (inputInterval < MIN_INTERVAL_MINUTES) {
-                Toast.makeText(
-                    requireContext(),
-                    "Minimum interval is $MIN_INTERVAL_MINUTES minutes. Using $MIN_INTERVAL_MINUTES.",
-                    Toast.LENGTH_LONG
-                ).show()
-                MIN_INTERVAL_MINUTES
-            } else {
-                inputInterval
-            }
-
             settings.isEnabled = hydrationSwitch.isChecked
-            settings.intervalMinutes = actualInterval
+            settings.intervalMinutes = interval
 
             dataManager.saveHydrationSettings(settings)
 
             if (settings.isEnabled) {
-                scheduleHydrationReminders(actualInterval)
-                Toast.makeText(
-                    requireContext(),
-                    "Reminders enabled! Next reminder in $actualInterval minutes",
-                    Toast.LENGTH_LONG
-                ).show()
+                scheduleHydrationReminders(interval)
+                Toast.makeText(requireContext(), "Reminders enabled!", Toast.LENGTH_SHORT).show()
             } else {
                 cancelHydrationReminders()
-                Toast.makeText(
-                    requireContext(),
-                    "Reminders disabled",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Reminders disabled", Toast.LENGTH_SHORT).show()
             }
-
-            // Update the display to show actual interval
-            intervalInput.setText(actualInterval.toString())
         }
     }
 
     private fun scheduleHydrationReminders(intervalMinutes: Int) {
-        val workRequest = PeriodicWorkRequestBuilder<HydrationReminderWorker>(
-            intervalMinutes.toLong(),
-            TimeUnit.MINUTES
-        )
-            .addTag("hydration_reminder") // For easier debugging
+        if (intervalMinutes < 1) {
+            Toast.makeText(requireContext(), "Minimum interval is 1 minute", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Cancel any existing work first
+        cancelHydrationReminders()
+
+        val workRequest = androidx.work.OneTimeWorkRequestBuilder<HydrationReminderWorker>()
+            .setInitialDelay(intervalMinutes.toLong(), TimeUnit.MINUTES)
+            .addTag("HydrationReminder")
             .build()
 
-        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-            "HydrationReminder",
-            ExistingPeriodicWorkPolicy.UPDATE,
-            workRequest
-        )
+        WorkManager.getInstance(requireContext()).enqueue(workRequest)
+
+        // Set up the next reminder when this one completes
+        WorkManager.getInstance(requireContext())
+            .getWorkInfoByIdLiveData(workRequest.id)
+            .observe(viewLifecycleOwner) { workInfo ->
+                if (workInfo?.state?.isFinished == true && settings.isEnabled) {
+                    // Reschedule the next reminder
+                    scheduleHydrationReminders(intervalMinutes)
+                }
+            }
     }
 
     private fun cancelHydrationReminders() {
-        WorkManager.getInstance(requireContext()).cancelUniqueWork("HydrationReminder")
+        WorkManager.getInstance(requireContext()).cancelAllWorkByTag("HydrationReminder")
     }
 }

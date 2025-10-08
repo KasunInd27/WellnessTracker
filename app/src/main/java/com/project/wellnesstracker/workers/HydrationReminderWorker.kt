@@ -7,17 +7,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.work.Worker
+import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.project.wellnesstracker.MainActivity
+import com.project.wellnesstracker.R
+import kotlinx.coroutines.delay
 
 class HydrationReminderWorker(
     context: Context,
     params: WorkerParameters
-) : Worker(context, params) {
+) : CoroutineWorker(context, params) {
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result {
         showNotification()
+
+        // Add a small delay to prevent potential rapid firing
+        delay(1000) // 1 second minimum between notifications
+
         return Result.success()
     }
 
@@ -27,6 +33,7 @@ class HydrationReminderWorker(
 
         val channelId = "hydration_reminders"
 
+        // Create notification channel for Android O and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -56,8 +63,8 @@ class HydrationReminderWorker(
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Time to Hydrate!")
-            .setContentText("Don't forget to drink water 💧")
+            .setContentTitle("Time to Hydrate! 💧")
+            .setContentText("Don't forget to drink water and stay hydrated!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
