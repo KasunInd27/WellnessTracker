@@ -1,18 +1,21 @@
 package com.project.wellnesstracker.fragments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+
 import com.project.wellnesstracker.R
 import com.project.wellnesstracker.adapters.HabitAdapter
 import com.project.wellnesstracker.models.Habit
@@ -37,10 +40,26 @@ class HabitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recyclerView = view.findViewById(R.id.habits_recycler)
+
+        // Animate RecyclerView items
+        val layoutAnimationController = AnimationUtils.loadLayoutAnimation(
+            requireContext(),
+            R.anim.layout_animation_fall_down
+        )
+        recyclerView.layoutAnimation = layoutAnimationController
+
+        // FAB animation
+        val fabAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up)
+        val addHabitButton = view.findViewById<ExtendedFloatingActionButton>(R.id.add_habit_button)
+
+        addHabitButton.startAnimation(fabAnimation)
+
+
         dataManager = DataManager(requireContext())
         habits.addAll(dataManager.loadHabits())
 
-        recyclerView = view.findViewById(R.id.habits_recycler)
+
         habitAdapter = HabitAdapter(
             habits,
             onHabitToggled = { saveHabits() },
@@ -53,7 +72,8 @@ class HabitsFragment : Fragment() {
 
         recyclerView.adapter = habitAdapter
 
-        view.findViewById<FloatingActionButton>(R.id.add_habit_button).setOnClickListener {
+        view.findViewById<ExtendedFloatingActionButton
+                >(R.id.add_habit_button).setOnClickListener {
             showAddHabitDialog()
         }
     }
@@ -109,6 +129,7 @@ class HabitsFragment : Fragment() {
         builder.show()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun editHabit(habit: Habit) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Edit Habit")

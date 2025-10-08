@@ -4,65 +4,149 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="4dp"
-    app:cardCornerRadius="8dp">
+    android:backgroundTint="@android:color/white"
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <CheckBox
+        <!-- Icon/Color Indicator -->
+        <View
+            android:id="@+id/habit_color_indicator"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:background="@color/wellness_blue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Emoji Icon -->
+        <TextView
+            android:id="@+id/habit_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="💧"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:background="@drawable/icon_circle_bg"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/habit_color_indicator" />
+
+        <!-- Habit Info -->
+        <LinearLayout
+            android:id="@+id/habit_info_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="@id/habit_icon"
+            app:layout_constraintBottom_toBottomOf="@id/habit_icon"
+            app:layout_constraintStart_toEndOf="@id/habit_icon"
+            app:layout_constraintEnd_toStartOf="@id/habit_checkbox">
+
+            <TextView
+                android:id="@+id/habit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drink Water"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_light_onBackground"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/habit_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8 glasses per day"
+                android:textSize="13sp"
+                android:textColor="@color/gray_500"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Checkbox -->
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/habit_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/checkbox_tint"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/delete_button"
+            app:layout_constraintBottom_toTopOf="@id/habit_progress_layout" />
 
-        <TextView
-            android:id="@+id/habit_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Habit Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="@id/habit_checkbox"
-            app:layout_constraintBottom_toBottomOf="@id/habit_checkbox"
-            app:layout_constraintStart_toEndOf="@id/habit_checkbox"
-            app:layout_constraintEnd_toStartOf="@id/delete_button" />
-
+        <!-- Delete Button -->
         <ImageButton
             android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/gray_400"
+            android:contentDescription="Delete habit"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/habit_progress_layout" />
 
-        <TextView
-            android:id="@+id/habit_description"
+        <!-- Progress Section -->
+        <LinearLayout
+            android:id="@+id/habit_progress_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Description"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/habit_checkbox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/habit_icon"
+            app:layout_constraintStart_toStartOf="@id/habit_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <ProgressBar
-            android:id="@+id/habit_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            app:layout_constraintTop_toBottomOf="@id/habit_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Today's Progress"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_500" />
+
+                <TextView
+                    android:id="@+id/progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary" />
+
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/habit_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0"
+                app:trackCornerRadius="8dp"
+                app:trackThickness="8dp"
+                app:indicatorColor="@color/md_theme_light_primary"
+                app:trackColor="@color/gray_200" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -137,7 +137,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Material 3
-    implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("com.google.android.material:material:1.11.0")
 
     // Fragment & Navigation
     implementation("androidx.fragment:fragment-ktx:1.6.2")
