@@ -1,3 +1,5 @@
+// utils/DataManager.kt
+
 package com.project.wellnesstracker.utils
 
 import android.content.Context
@@ -6,6 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.project.wellnesstracker.models.Habit
 import com.project.wellnesstracker.models.HydrationSettings
+import com.project.wellnesstracker.models.HabitReminderSettings
 import com.project.wellnesstracker.models.MoodEntry
 
 class DataManager(context: Context) {
@@ -52,6 +55,21 @@ class DataManager(context: Context) {
         }
     }
 
+    // Habit Reminder Settings
+    fun saveHabitReminderSettings(settings: HabitReminderSettings) {
+        val json = gson.toJson(settings)
+        prefs.edit().putString("habit_reminder_settings", json).apply()
+    }
+
+    fun loadHabitReminderSettings(): HabitReminderSettings {
+        val json = prefs.getString("habit_reminder_settings", null)
+        return if (json != null) {
+            gson.fromJson(json, HabitReminderSettings::class.java)
+        } else {
+            HabitReminderSettings()
+        }
+    }
+
     // Today's completion percentage for widget
     fun getTodayCompletionPercentage(): Int {
         val habits = loadHabits()
@@ -59,5 +77,25 @@ class DataManager(context: Context) {
 
         val completedCount = habits.count { it.isCompletedToday() }
         return (completedCount * 100) / habits.size
+    }
+
+    // Get water-related habits
+    fun getWaterRelatedHabits(): List<Habit> {
+        return loadHabits().filter { it.isWaterRelated() }
+    }
+
+    // Get non-water habits
+    fun getNonWaterHabits(): List<Habit> {
+        return loadHabits().filter { !it.isWaterRelated() }
+    }
+
+    // Check if there are any incomplete water habits today
+    fun hasIncompleteWaterHabits(): Boolean {
+        return getWaterRelatedHabits().any { !it.isCompletedToday() }
+    }
+
+    // Check if there are any incomplete non-water habits today
+    fun hasIncompleteNonWaterHabits(): Boolean {
+        return getNonWaterHabits().any { !it.isCompletedToday() }
     }
 }

@@ -1,3 +1,5 @@
+// fragments/HabitsFragment.kt
+
 package com.project.wellnesstracker.fragments
 
 import android.annotation.SuppressLint
@@ -15,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-
 import com.project.wellnesstracker.R
 import com.project.wellnesstracker.adapters.HabitAdapter
 import com.project.wellnesstracker.models.Habit
@@ -52,13 +53,10 @@ class HabitsFragment : Fragment() {
         // FAB animation
         val fabAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up)
         val addHabitButton = view.findViewById<ExtendedFloatingActionButton>(R.id.add_habit_button)
-
         addHabitButton.startAnimation(fabAnimation)
-
 
         dataManager = DataManager(requireContext())
         habits.addAll(dataManager.loadHabits())
-
 
         habitAdapter = HabitAdapter(
             habits,
@@ -72,8 +70,7 @@ class HabitsFragment : Fragment() {
 
         recyclerView.adapter = habitAdapter
 
-        view.findViewById<ExtendedFloatingActionButton
-                >(R.id.add_habit_button).setOnClickListener {
+        addHabitButton.setOnClickListener {
             showAddHabitDialog()
         }
     }
@@ -83,15 +80,14 @@ class HabitsFragment : Fragment() {
         val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         recyclerView.layoutManager = when {
-            isTablet -> GridLayoutManager(requireContext(), 2) // 2 columns for tablets
-            isLandscape -> GridLayoutManager(requireContext(), 2) // 2 columns for landscape
-            else -> LinearLayoutManager(requireContext()) // 1 column for portrait phone
+            isTablet -> GridLayoutManager(requireContext(), 2)
+            isLandscape -> GridLayoutManager(requireContext(), 2)
+            else -> LinearLayoutManager(requireContext())
         }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        // Update layout when orientation changes
         setupLayoutManager()
     }
 
@@ -118,7 +114,14 @@ class HabitsFragment : Fragment() {
         builder.setPositiveButton("Add") { _, _ ->
             val name = nameInput.text.toString()
             if (name.isNotBlank()) {
-                val habit = Habit(name = name, description = descInput.text.toString())
+                // Auto-detect icon based on habit name
+                val icon = Habit.getIconForHabit(name)
+
+                val habit = Habit(
+                    name = name,
+                    description = descInput.text.toString(),
+                    icon = icon
+                )
                 habits.add(habit)
                 habitAdapter.notifyItemInserted(habits.size - 1)
                 saveHabits()
@@ -153,8 +156,13 @@ class HabitsFragment : Fragment() {
         builder.setView(layout)
 
         builder.setPositiveButton("Save") { _, _ ->
-            habit.name = nameInput.text.toString()
+            val newName = nameInput.text.toString()
+            habit.name = newName
             habit.description = descInput.text.toString()
+
+            // Update icon if name changed
+            habit.icon = Habit.getIconForHabit(newName)
+
             habitAdapter.notifyDataSetChanged()
             saveHabits()
         }
@@ -172,7 +180,6 @@ class HabitsFragment : Fragment() {
 
     private fun saveHabits() {
         dataManager.saveHabits(habits)
-        // Update widget when habits change
         WidgetUpdateHelper.updateWidget(requireContext())
     }
 }

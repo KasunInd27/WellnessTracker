@@ -1,3 +1,5 @@
+// adapters/HabitAdapter.kt
+
 package com.project.wellnesstracker.adapters
 
 import android.view.LayoutInflater
@@ -23,7 +25,9 @@ class HabitAdapter(
         val name: TextView = view.findViewById(R.id.habit_name)
         val description: TextView = view.findViewById(R.id.habit_description)
         val progress: ProgressBar = view.findViewById(R.id.habit_progress)
+        val progressText: TextView = view.findViewById(R.id.progress_text)
         val deleteButton: ImageButton = view.findViewById(R.id.delete_button)
+        val habitIcon: TextView = view.findViewById(R.id.habit_icon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
@@ -39,6 +43,10 @@ class HabitAdapter(
         holder.description.text = habit.description
         holder.checkbox.isChecked = habit.isCompletedToday()
         holder.progress.progress = habit.getTodayProgress()
+        holder.progressText.text = "${habit.getTodayProgress()}%"
+
+        // Display the habit's icon
+        holder.habitIcon.text = habit.icon
 
         holder.checkbox.setOnClickListener {
             habit.toggleCompletion()
