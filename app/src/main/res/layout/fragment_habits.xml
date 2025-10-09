@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily Habits"
+                android:text="@string/daily_habits"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_onBackground"
@@ -33,7 +33,7 @@
                 android:id="@+id/date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today, January 15"
+                android:text="@string/today_january_15"
                 android:textSize="16sp"
                 android:textColor="@color/gray_600"
                 android:layout_marginTop="4dp" />
@@ -81,7 +81,7 @@
                                 android:id="@+id/progress_percentage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="65%"
+                                android:text="@string/_65"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/md_theme_light_primary" />
@@ -89,7 +89,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Complete"
+                                android:text="@string/complete"
                                 android:textSize="11sp"
                                 android:textColor="@color/gray_500" />
 
@@ -126,7 +126,7 @@
                                     android:id="@+id/completed_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="5"
+                                    android:text="@string/_5"
                                     android:textSize="20sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/md_theme_light_onBackground" />
@@ -134,7 +134,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Completed"
+                                    android:text="@string/completed"
                                     android:textSize="12sp"
                                     android:textColor="@color/gray_500" />
 
@@ -162,7 +162,7 @@
                                     android:id="@+id/remaining_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="3"
+                                    android:text="@string/_3"
                                     android:textSize="20sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/md_theme_light_onBackground" />
@@ -170,7 +170,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Remaining"
+                                    android:text="@string/remaining"
                                     android:textSize="12sp"
                                     android:textColor="@color/gray_500" />
 
@@ -203,7 +203,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Habits"
+                android:text="@string/your_habits"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_onBackground"
@@ -228,7 +228,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
-        android:text="Add Habit"
+        android:text="@string/add_habit"
         android:textColor="@android:color/white"
         app:icon="@drawable/ic_add"
         app:iconTint="@android:color/white"

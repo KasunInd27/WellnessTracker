@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mood Journal"
+                android:text="@string/mood_journal"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_onBackground"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Track your daily emotions"
+                android:text="@string/track_your_daily_emotions"
                 android:textSize="16sp"
                 android:textColor="@color/gray_600"
                 android:layout_marginTop="4dp" />
@@ -67,7 +67,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="How are you feeling today?"
+                        android:text="@string/how_are_you_feeling_today"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_onBackground" />
@@ -97,7 +97,7 @@
                                 android:id="@+id/emoji_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:text="😊"
+                                android:text="@string/happyEmoji"
                                 android:textSize="32sp"
                                 android:gravity="center"
                                 android:background="?attr/selectableItemBackground" />
@@ -119,7 +119,7 @@
                                 android:id="@+id/emoji_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:text="😐"
+                                android:text="@string/fearEmoji"
                                 android:textSize="32sp"
                                 android:gravity="center"
                                 android:background="?attr/selectableItemBackground" />
@@ -141,7 +141,7 @@
                                 android:id="@+id/emoji_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:text="😢"
+                                android:text="@string/sadEmoji"
                                 android:textSize="32sp"
                                 android:gravity="center"
                                 android:background="?attr/selectableItemBackground" />
@@ -163,7 +163,7 @@
                                 android:id="@+id/emoji_4"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:text="😡"
+                                android:text="@string/angerEmoji"
                                 android:textSize="32sp"
                                 android:gravity="center"
                                 android:background="?attr/selectableItemBackground" />
@@ -185,7 +185,7 @@
                                 android:id="@+id/emoji_5"
                                 android:layout_width="match_parent"
                                 android:layout_height="60dp"
-                                android:text="😴"
+                                android:text="@string/sleepyEmoji"
                                 android:textSize="32sp"
                                 android:gravity="center"
                                 android:background="?attr/selectableItemBackground" />
@@ -199,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:hint="Add a note (optional)"
+                        android:hint="@string/add_a_note_optional"
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
@@ -223,7 +223,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="16dp"
-                        android:text="Save Mood"
+                        android:text="@string/save_mood"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:cornerRadius="28dp"
@@ -244,7 +244,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mood History"
+                    android:text="@string/mood_history"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/md_theme_light_onBackground"

@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="@string/settings2"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_onBackground"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customize your wellness experience"
+                android:text="@string/customize_your_wellness_experience"
                 android:textSize="16sp"
                 android:textColor="@color/gray_600"
                 android:layout_marginTop="4dp" />
@@ -81,7 +81,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="💧"
+                                android:text="@string/waterDrop"
                                 android:textSize="24sp"
                                 android:gravity="center" />
 
@@ -97,7 +97,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Hydration Reminders"
+                                android:text="@string/hydration_reminders1"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/md_theme_light_onBackground" />
@@ -105,7 +105,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Stay hydrated throughout the day"
+                                android:text="@string/stay_hydrated_throughout_the_day"
                                 android:textSize="13sp"
                                 android:textColor="@color/gray_500"
                                 android:layout_marginTop="2dp" />
@@ -132,7 +132,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reminder Interval"
+                        android:text="@string/reminder_interval"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_onBackground" />
@@ -141,7 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Minutes"
+                        android:hint="@string/minutes"
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
@@ -156,7 +156,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:text="60" />
+                            android:text="@string/_60_" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,14 +174,14 @@
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30 min" />
+                            android:text="@string/_30_min" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_60"
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 hour"
+                            android:text="@string/_1_hour"
                             android:checked="true" />
 
                         <com.google.android.material.chip.Chip
@@ -189,14 +189,14 @@
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="90 min" />
+                            android:text="@string/_90_min" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_120"
                             style="@style/Widget.Material3.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2 hours" />
+                            android:text="@string/_2_hours" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -206,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginTop="20dp"
-                        android:text="Save Settings"
+                        android:text="@string/save_settings1"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:cornerRadius="28dp"
@@ -235,7 +235,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Notifications"
+                        android:text="@string/notifications"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_onBackground" />
@@ -257,14 +257,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Daily Reminders"
+                                android:text="@string/daily_reminders"
                                 android:textSize="15sp"
                                 android:textColor="@color/md_theme_light_onBackground" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Get reminded about your habits"
+                                android:text="@string/get_reminded_about_your_habits"
                                 android:textSize="12sp"
                                 android:textColor="@color/gray_500"
                                 android:layout_marginTop="2dp" />
@@ -300,14 +300,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Mood Check-ins"
+                                android:text="@string/mood_check_ins"
                                 android:textSize="15sp"
                                 android:textColor="@color/md_theme_light_onBackground" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Remind to log your mood"
+                                android:text="@string/remind_to_log_your_mood"
                                 android:textSize="12sp"
                                 android:textColor="@color/gray_500"
                                 android:layout_marginTop="2dp" />

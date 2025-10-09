@@ -31,7 +31,7 @@
             android:id="@+id/habit_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:text="💧"
+            android:text="@string/drop"
             android:textSize="28sp"
             android:gravity="center"
             android:background="@drawable/icon_circle_bg"
@@ -55,7 +55,7 @@
                 android:id="@+id/habit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Drink Water"
+                android:text="@string/drink_water"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_onBackground"
@@ -66,7 +66,7 @@
                 android:id="@+id/habit_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8 glasses per day"
+                android:text="@string/_8_glasses_per_day"
                 android:textSize="13sp"
                 android:textColor="@color/gray_500"
                 android:layout_marginTop="2dp"
@@ -93,7 +93,7 @@
             android:src="@drawable/ic_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:tint="@color/gray_400"
-            android:contentDescription="Delete habit"
+            android:contentDescription="@string/delete_habit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/habit_progress_layout" />
@@ -120,7 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Today's Progress"
+                    android:text="@string/today_s_progress"
                     android:textSize="12sp"
                     android:textColor="@color/gray_500" />
 
@@ -128,7 +128,7 @@
                     android:id="@+id/progress_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0%"
+                    android:text="@string/_0"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@color/md_theme_light_primary" />
